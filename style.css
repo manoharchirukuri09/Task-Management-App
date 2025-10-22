@@ -1,0 +1,392 @@
+/* --- 1. Global Reset & Variables (8px Spacing System) --- */
+:root {
+    /* Spacing System */
+    --s-unit: 8px; /* Base 8px unit */
+    --s-2: 16px;
+    --s-3: 24px;
+    --s-4: 32px;
+    --s-6: 48px;
+
+    /* Colors */
+    --color-primary-blue: #3B82F6; /* Primary */
+    --color-secondary-purple: #8B5CF6; /* Secondary */
+    --color-accent-emerald: #10B981; /* Accent */
+    --color-success: var(--color-accent-emerald);
+    --color-warning: #FBBF24;
+    --color-error: #EF4444;
+    
+    --color-bg-dark: #1F2937;
+    --color-bg-light: #F9FAFB;
+    --color-text-dark: #374151;
+    --color-text-light: #D1D5DB;
+
+    /* Design Elements */
+    --radius-md: 0.5rem;
+    --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: var(--s-4);
+}
+
+/* --- 2. Typography and Header --- */
+.header {
+    background: linear-gradient(135deg, var(--color-primary-blue), var(--color-secondary-purple));
+    color: white;
+    padding: var(--s-3) var(--s-4);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--s-2);
+}
+
+.logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.logo strong {
+    font-weight: 900;
+    color: var(--color-accent-emerald);
+}
+
+.controls {
+    display: flex;
+    gap: var(--s-2);
+}
+
+.input-field, .filter-select {
+    padding: var(--s-unit) var(--s-2);
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+.input-field:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* --- 3. Buttons and Interactions --- */
+.btn {
+    padding: var(--s-unit) var(--s-2);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-primary-blue);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #3172e2;
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: #E5E7EB;
+    color: var(--color-text-dark);
+}
+.btn-secondary:hover {
+    background-color: #D1D5DB;
+}
+
+/* --- 4. Main Grid Layout (Responsive) --- */
+.container {
+    max-width: 1400px;
+    margin: var(--s-4) auto;
+    padding: 0 var(--s-2);
+}
+
+.planner-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile (Single column) */
+    gap: var(--s-2);
+    margin-top: var(--s-3);
+}
+
+@media (min-width: 768px) { /* Tablet (3 days) */
+    .planner-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1200px) { /* Desktop (Full week) */
+    .planner-grid {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+/* --- 5. Day Column Styling --- */
+.day {
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: var(--s-2);
+    box-shadow: var(--shadow-subtle);
+    min-height: 250px;
+}
+
+.day h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--s-unit);
+    padding-bottom: var(--s-unit);
+    border-bottom: 2px solid #F3F4F6;
+    color: var(--color-secondary-purple);
+}
+
+/* Drag-and-Drop Visual Feedback */
+.day.drag-over {
+    background-color: rgba(139, 92, 246, 0.1); /* Subtle purple tint */
+    border: 2px dashed var(--color-secondary-purple);
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--s-unit);
+}
+
+/* --- 6. Task Card Styling --- */
+.task-card {
+    background-color: #F9FAFB;
+    border-radius: var(--radius-md);
+    padding: var(--s-unit);
+    margin-bottom: var(--s-unit);
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: var(--s-unit);
+    transition: all 0.2s ease;
+    border-left: 5px solid transparent; /* Priority color will override this */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.task-card:hover {
+    background-color: #F3F4F6;
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+}
+
+/* Dragging state */
+.task-card.is-dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.task-card.completed {
+    opacity: 0.6;
+    background-color: #EFF6FF;
+    border-left-color: var(--color-success) !important;
+}
+
+.task-text {
+    flex-grow: 1;
+    font-size: 0.95rem;
+}
+.task-card.completed .task-text {
+    text-decoration: line-through;
+    color: #6B7280;
+}
+
+.task-actions {
+    display: flex;
+    gap: var(--s-unit);
+}
+
+.edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-dark);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 1;
+    color: var(--color-primary-blue);
+}
+.delete-btn:hover {
+    color: var(--color-error);
+}
+
+/* Priority Styling */
+.task-card[data-priority="High"] { border-left-color: var(--color-error); }
+.task-card[data-priority="Medium"] { border-left-color: var(--color-warning); }
+.task-card[data-priority="Low"] { border-left-color: var(--color-accent-emerald); }
+
+/* --- 7. Modal (Glass-morphism) --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-backdrop.hidden {
+    display: none;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-hover);
+    padding: var(--s-3);
+}
+
+.modal {
+    width: 90%;
+    max-width: 600px;
+    background: white; /* Override glass background for better readability */
+    padding: var(--s-4);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.form-group {
+    margin-bottom: var(--s-2);
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--s-unit);
+}
+
+.form-group-row {
+    display: flex;
+    gap: var(--s-2);
+}
+.form-group-row .form-group {
+    flex: 1;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--s-2);
+    margin-top: var(--s-3);
+}
+
+/* --- 8. Stats and Filters --- */
+.stats-and-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    align-items: center;
+}
+
+.stats-panel, .filter-panel {
+    padding: var(--s-2);
+    background-color: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-subtle);
+}
+
+.stats-panel {
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+.stats-panel h3 {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--s-unit);
+}
+
+.progress-bar-container {
+    height: var(--s-unit);
+    background-color: #E5E7EB;
+    border-radius: var(--s-unit);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary-blue), var(--color-accent-emerald));
+    width: 0%; /* JS sets this */
+    transition: width 0.4s ease-out;
+}
+
+/* --- Responsive Adjustments for Task Creation Form --- */
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .controls {
+        width: 100%;
+    }
+    .input-field {
+        width: 100%;
+    }
+    .form-group-row {
+        flex-direction: column;
+    }
+    .stats-and-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+/* ... (Existing CSS content remains the same) ... */
+
+/* --- 6. Task Card Styling (Add link indicator style) --- */
+
+/* Add styling for the new textarea element */
+#task-notes {
+    width: 100%;
+    padding: var(--s-unit);
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    resize: vertical;
+    font-family: inherit; /* Use Inter font */
+}
+#task-notes:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    outline: none;
+}
+
+
+.task-actions {
+    display: flex;
+    gap: var(--s-unit);
+    align-items: center; /* Ensure icons align nicely */
+}
+
+/* Style for the link icon */
+.link-btn {
+    color: var(--color-accent-emerald);
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    text-decoration: none;
+}
+.link-btn:hover {
+    opacity: 1;
+}
+
+/* ... (Rest of existing CSS content remains the same) ... */

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Planner | Core Features</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="logo">Weekly  Planner</h1>
+        <div class="controls">
+            <input type="text" id="search-input" placeholder="Search tasks..." class="input-field">
+            <button id="add-task-btn" class="btn btn-primary" title="Ctrl/Cmd + K"><i class="fas fa-plus"></i> Quick Add</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="stats-and-filters">
+            <div id="stats-panel" class="stats-panel glass-effect">
+                <h3>Progress <span id="progress-percent">0%</span></h3>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+            </div>
+            <div class="filter-panel glass-effect">
+                <select id="filter-priority" class="filter-select">
+                    <option value="all">All Priorities</option>
+                    <option value="High">High Priority</option>
+                    <option value="Medium">Medium Priority</option>
+                    <option value="Low">Low Priority</option>
+                </select>
+                <select id="filter-category" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Fitness">Fitness</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="planner-grid" class="planner-grid">
+            </section>
+    </main>
+
+    <div id="task-modal" class="modal-backdrop hidden">
+        <div class="modal glass-effect">
+            <h2 id="modal-title">Create New Task</h2>
+            <form id="task-form">
+                <input type="hidden" id="task-id">
+                
+                <div class="form-group">
+                    <label for="task-text">Task Description</label>
+                    <input type="text" id="task-text" required class="input-field">
+                </div>
+                
+                <div class="form-group">
+                    <label for="task-link">Link URL (e.g., Notion, Jira, Figma)</label>
+                    <input type="url" id="task-link" placeholder="https://..." class="input-field">
+                </div>
+
+                <div class="form-group">
+                    <label for="task-notes">Notes</label>
+                    <textarea id="task-notes" rows="3" placeholder="Add specific details"></textarea>
+                </div>
+
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="task-day">Day</label>
+                        <select id="task-day" required class="input-field">
+                            <option value="Mon">Monday</option>
+                            <option value="Tue">Tuesday</option>
+                            <option value="Wed">Wednesday</option>
+                            <option value="Thu">Thursday</option>
+                            <option value="Fri">Friday</option>
+                            <option value="Sat">Saturday</option>
+                            <option value="Sun">Sunday</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="task-priority">Priority</label>
+                        <select id="task-priority" required class="input-field">
+                            <option value="High">High</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="task-category">Category</label>
+                        <select id="task-category" required class="input-field">
+                            <option value="Work">Work</option>
+                            <option value="Personal">Personal</option>
+                            <option value="Fitness">Fitness</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" id="save-task-btn" class="btn btn-primary">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
